@@ -1,58 +1,39 @@
 <?php
 
-if(isset($_GET['code'])){
-	$code = $_GET['code'];
-
-	$ch = curl_init();
-
-	$url = 'https://foursquare.com/oauth2/access_token?client_id=033MKCPSDFMK3UWLNLX215BWJJXLNQQMVCC2BLNZHN5F4IJL&client_secret=RHVXD2HYJR2QNERA0PKPI3L1XJVL1MLKTKDTPT5304XI1ZM5&grant_type=authorization_code&redirect_uri=http://stark-cliffs-9895.herokuapp.com/checkins.php&code=' . $code;
-								//echo $url;
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	$contents = curl_exec($ch);
-	curl_close($ch);
-	$arr = json_decode($contents,true);
-	echo $arr['access_token'];
-
-	if(!empty($arr['access_token'])){
-
-		$ch = curl_init();
-
-	$url = 'https://api.foursquare.com/v2/users/self/checkins?oauth_token=' . $arr['access_token'] . '&v=20140922';
-								//echo $url;
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	$contents = curl_exec($ch);
-	curl_close($ch);
-	print_r($contents);
-	$checkins = json_decode($contents,true);
-	print_r($checkins);
-	?> 
-	<script type="text/javascript">
-	var access_token = <?php echo $arr['access_token']; ?>;
-	</script>
-	<?php
-	}
-
-
-}
-
 ?>
 <html>
 <head>
 	
 </head>
 <body>
-		<section id="my-timeline"></section>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1428419320733926&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div style="padding: 4px;margin: 4px;float: right;">
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://bit.ly/1B3932N" data-text="Foursquare check-in timeline" data-via="geetanjaligg">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<div class="fb-like" data-href="http://bit.ly/1B3932N" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+</div>
+
+		<section id="my-timeline" style="height:500px;"></section>
+<footer style="text-align: center;position: fixed;bottom: 0px;height: 30px;width: 100%;">@geetanjaligg</footer>
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="timeline/js/storyjs-embed.js"></script>
+<script src="js/purl.js"></script>
 	
 
 <script type="text/javascript">
 
+var at = $.url(); //.param('access_token');
+
+console.log(at);
+console.log(at.fparam('access_token'));
 var access_token = 'GNFQ1AHXDM2KWNTTQRN55QERKXA0VLOMRMKP2YTHQ3QFQJCK';
 console.log("https://api.foursquare.com/v2/users/self/checkins?oauth_token=" + access_token + "&v=20140922");
 var url = "https://api.foursquare.com/v2/users/self/checkins?oauth_token=" + access_token + "&v=20140922&limit=540";
@@ -61,7 +42,7 @@ var timeline = {
 	"timeline": {
 		"headline":"My Checkins",
 		"type":"default",
-		"text":"This is a collection of my checkins",
+		"text":" Foursquare check-in timeline ",
 		"date": []
 	}
 };
@@ -81,7 +62,7 @@ var populateTimeline = (function() {
 						headline: data.response.checkins.items[i].venue.name,
 						text: data.response.checkins.items[i].shout,
 						asset: {
-							media: '', //'https://twitter.com/' + data[i].user.screen_name + '/status/' + data[i].id_str,
+							media: '',
 							credit: '',
 							caption: ''
 						},
@@ -96,22 +77,15 @@ var populateTimeline = (function() {
 	}
 	return {
 		foursquare: foursquare
-		//flickr: flickr,
-		//flickrCallback: flickrCallback,
-		//youtube: youtube,
-		//vimeo: vimeo
 	};
 })();
 	
 $.when(
 	populateTimeline.foursquare()
-	//populateTimeline.flickr(),
-	//populateTimeline.youtube(),
-	//populateTimeline.vimeo()
 ).then(function() {
 	createStoryJS({
 		width: window.innerWidth,
-		height: window.innerHeight,
+		height: 500,
 		source: timeline,
 		embed_id: 'my-timeline'
 	});
