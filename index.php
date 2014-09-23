@@ -2,7 +2,7 @@
 # This function reads your DATABASE_URL configuration automatically set by Heroku
 # the return value is a string that will work with pg_connect
 function pg_connection_string() {
-  // we will fill this out next
+  return "dbname=abcdefg host=****.amazonaws.com port=5432 user=**** password=**** sslmode=require";
 }
  
 # Establish db connection
