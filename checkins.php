@@ -6,38 +6,43 @@
 	
 </head>
 <body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1428419320733926&version=v2.0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div style="padding: 4px;margin: 4px;float: right;">
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://bit.ly/1B3932N" data-text="Foursquare check-in timeline" data-via="geetanjaligg">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-<div class="fb-like" data-href="http://bit.ly/1B3932N" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
-</div>
 
-		<section id="my-timeline" style="height:500px;"></section>
-<footer style="text-align: center;position: fixed;bottom: 0px;height: 30px;width: 100%;">@geetanjaligg</footer>
+	<div id="fb-root"></div>
+
+	<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1428419320733926&version=v2.0";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+	<div style="padding: 4px;margin: 4px;float: right;">
+		<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://bit.ly/1B3932N" data-text="Foursquare check-in timeline" data-via="geetanjaligg">Tweet</a>
+
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+		<div class="fb-like" data-href="http://bit.ly/1B3932N" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+
+	</div>
+
+	<section id="my-timeline" style="height:500px;"></section>
+
+	<footer style="text-align: center;position: fixed;bottom: 0px;height: 30px;width: 100%;">@geetanjaligg</footer>
 </body>
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="timeline/js/storyjs-embed.js"></script>
 <script src="js/purl.js"></script>
-	
-
 <script type="text/javascript">
 
-var at = $.url(); //.param('access_token');
-
-console.log(at);
-console.log(at.fparam('access_token'));
-var access_token = 'GNFQ1AHXDM2KWNTTQRN55QERKXA0VLOMRMKP2YTHQ3QFQJCK';
+var at = $.url();
+var access_token = at.fparam('access_token');
+if(typeof access_token == 'undefined'){
+	window.location = 'connect.php';
+}
 console.log("https://api.foursquare.com/v2/users/self/checkins?oauth_token=" + access_token + "&v=20140922");
 var url = "https://api.foursquare.com/v2/users/self/checkins?oauth_token=" + access_token + "&v=20140922&limit=540";
-
 var timeline = {
 	"timeline": {
 		"headline":"My Checkins",
@@ -56,8 +61,8 @@ var populateTimeline = (function() {
 				var n_checkins = data.response.checkins.items.length;
 				console.log(n_checkins);
 				for (var i = 0; i < n_checkins ; i++) {
-						date = new Date(data.response.checkins.items[i].createdAt*1000),
-						month = date.getMonth() + 1;			
+					date = new Date(data.response.checkins.items[i].createdAt*1000),
+					month = date.getMonth() + 1;			
 					var checkin = {
 						headline: data.response.checkins.items[i].venue.name,
 						text: data.response.checkins.items[i].shout,
@@ -79,18 +84,17 @@ var populateTimeline = (function() {
 		foursquare: foursquare
 	};
 })();
-	
+
 $.when(
 	populateTimeline.foursquare()
-).then(function() {
-	createStoryJS({
-		width: window.innerWidth,
-		height: 500,
-		source: timeline,
-		embed_id: 'my-timeline'
+	).then(function() {
+		createStoryJS({
+			width: window.innerWidth,
+			height: 500,
+			source: timeline,
+			embed_id: 'my-timeline'
+		});
 	});
-});
-
 
 </script>
 </html>
