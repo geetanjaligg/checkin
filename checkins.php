@@ -66,10 +66,14 @@ var populateTimeline = (function() {
 					var media = '';
 					if(data.response.checkins.items[i].photos.count>0){
 						media = data.response.checkins.items[i].photos.items[0].prefix + '300x300' + data.response.checkins.items[i].photos.items[0].suffix;
+					}
+					var shout = '<shout>';
+					if(data.response.checkins.items[i].shout){
+						shout = data.response.checkins.items[i].shout;
 					}			
 					var checkin = {
 						headline: data.response.checkins.items[i].venue.name,
-						text: data.response.checkins.items[i].shout,
+						text: shout,
 						asset: {
 							media: media,
 							credit: '',
