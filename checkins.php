@@ -62,12 +62,16 @@ var populateTimeline = (function() {
 				console.log(n_checkins);
 				for (var i = 0; i < n_checkins ; i++) {
 					date = new Date(data.response.checkins.items[i].createdAt*1000),
-					month = date.getMonth() + 1;			
+					month = date.getMonth() + 1;
+					var media = '';
+					if(data.response.checkins.items[i].photos.count>0){
+						media = data.response.checkins.items[i].photos.items[0].prefix + '300x300' + data.response.checkins.items[i].photos.items[0].suffix;
+					}			
 					var checkin = {
 						headline: data.response.checkins.items[i].venue.name,
 						text: data.response.checkins.items[i].shout,
 						asset: {
-							media: '',
+							media: media,
 							credit: '',
 							caption: ''
 						},
