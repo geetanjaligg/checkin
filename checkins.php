@@ -84,6 +84,7 @@ var populateTimeline = (function() {
 					};
 					timeline.timeline.date.push(checkin);
 				}
+				console.log("updated" + JSON.stringify(timeline));
 				deferred.resolve();
 			});
 		});
@@ -92,6 +93,8 @@ var populateTimeline = (function() {
 		foursquare: foursquare
 	};
 })();
+
+console.log(JSON.stringify(timeline));
 
 $.when(
 	populateTimeline.foursquare()
