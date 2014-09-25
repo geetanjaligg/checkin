@@ -12,6 +12,6 @@
 	<div>
 		<span style="text-align: center;position: fixed;margin-top: 30px;width: 100%;font-family: 'Georgia',Times New Roman,Times,serif;font-size:16;">No account? Just want to check out the demo? <a style="color:black;" href="demo.php">Here you go! </a></span>
 	</div>
-	<footer style="text-align: center;position: fixed;bottom: 0px;height: 30px;width: 100%;"><a href="www.twitter.com/geetanjaligg/" target="_blank">@geetanjaligg </a></footer>
+	<footer style="text-align: center;position: fixed;bottom: 0px;height: 30px;width: 100%;"><a href="http://twitter.com/geetanjaligg/" target="_blank">@geetanjaligg </a></footer>
 </body>
 </html>

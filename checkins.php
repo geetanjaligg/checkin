@@ -28,7 +28,7 @@
 
 	<section id="my-timeline" style="height:500px;"></section>
 
-	<footer style="text-align: center;position: fixed;bottom: 0px;height: 30px;width: 100%;"><a href="www.twitter.com/geetanjaligg/" target="_blank">@geetanjaligg </a></footer>
+	<footer style="text-align: center;position: fixed;bottom: 0px;height: 30px;width: 100%;"><a href="http://twitter.com/geetanjaligg/" target="_blank">@geetanjaligg </a></footer>
 </body>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
